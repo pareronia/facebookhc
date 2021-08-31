@@ -74,7 +74,7 @@ public class TestBase<T> {
         }
     }
 
-    private FileTestCase readTestCase(
+    protected FileTestCase readTestCase(
             final File file,
             final BufferedReader in,
             final BufferedReader out,
