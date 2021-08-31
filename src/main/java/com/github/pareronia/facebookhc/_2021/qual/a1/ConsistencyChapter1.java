@@ -24,12 +24,12 @@ import java.util.StringTokenizer;
  * A1: Consistency - Chapter 1
  * @see <a href="https://www.facebook.com/codingcompetitions/hacker-cup/2021/qualification-round/problems/A1">https://www.facebook.com/codingcompetitions/hacker-cup/2021/qualification-round/problems/A1</a>
  */
-public class A1ConsistencyChapter1 {
+public class ConsistencyChapter1 {
 
     private final InputStream in;
     private final PrintStream out;
     
-    public A1ConsistencyChapter1(
+    public ConsistencyChapter1(
             final Boolean sample, final InputStream in, final PrintStream out) {
         this.in = in;
         this.out = out;
@@ -115,7 +115,7 @@ public class A1ConsistencyChapter1 {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         long timerStart = 0;
         if (sample) {
-            is = A1ConsistencyChapter1.class.getResourceAsStream("sample.in");
+            is = ConsistencyChapter1.class.getResourceAsStream("sample.in");
             out = new PrintStream(baos, true);
             timerStart = System.nanoTime();
         } else {
@@ -123,7 +123,7 @@ public class A1ConsistencyChapter1 {
             out = System.out;
         }
         
-        new A1ConsistencyChapter1(sample, is, out).solve();
+        new ConsistencyChapter1(sample, is, out).solve();
         
         out.flush();
         if (sample) {
@@ -141,7 +141,7 @@ public class A1ConsistencyChapter1 {
                 unit = "s";
             }
             final Path path
-                    = Paths.get(A1ConsistencyChapter1.class.getResource("sample.out").toURI());
+                    = Paths.get(ConsistencyChapter1.class.getResource("sample.out").toURI());
             final List<String> expected = Files.readAllLines(path);
             final List<String> actual = asList(baos.toString().split("\\r?\\n"));
             if (!expected.equals(actual)) {

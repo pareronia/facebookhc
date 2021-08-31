@@ -25,13 +25,13 @@ import java.util.function.Supplier;
  * B: Xs and Os
  * @see <a href="https://www.facebook.com/codingcompetitions/hacker-cup/2021/qualification-round/problems/B">https://www.facebook.com/codingcompetitions/hacker-cup/2021/qualification-round/problems/B</a>
  */
-public class BXsAndOs {
+public class XsAndOs {
 
     private final boolean sample;
     private final InputStream in;
     private final PrintStream out;
     
-    public BXsAndOs(
+    public XsAndOs(
             final Boolean sample, final InputStream in, final PrintStream out) {
         this.sample = sample;
         this.in = in;
@@ -115,7 +115,7 @@ public class BXsAndOs {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         long timerStart = 0;
         if (sample) {
-            is = BXsAndOs.class.getResourceAsStream("sample.in");
+            is = XsAndOs.class.getResourceAsStream("sample.in");
             out = new PrintStream(baos, true);
             timerStart = System.nanoTime();
         } else {
@@ -123,7 +123,7 @@ public class BXsAndOs {
             out = System.out;
         }
         
-        new BXsAndOs(sample, is, out).solve();
+        new XsAndOs(sample, is, out).solve();
         
         out.flush();
         if (sample) {
@@ -141,7 +141,7 @@ public class BXsAndOs {
                 unit = "s";
             }
             final Path path
-                    = Paths.get(BXsAndOs.class.getResource("sample.out").toURI());
+                    = Paths.get(XsAndOs.class.getResource("sample.out").toURI());
             final List<String> expected = Files.readAllLines(path);
             final List<String> actual = asList(baos.toString().split("\\r?\\n"));
             if (!expected.equals(actual)) {
