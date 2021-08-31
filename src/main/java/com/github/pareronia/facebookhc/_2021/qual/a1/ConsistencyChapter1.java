@@ -13,10 +13,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -36,67 +33,35 @@ public class ConsistencyChapter1 {
     }
     
     private static final Set<Character> VOWELS = Set.of('A', 'E', 'I', 'O', 'U');
-    private static final Set<Character> CONSONANTS = Set.of(
-            'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N',
-            'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z');
     
     private void handleTestCase(final Integer i, final FastScanner sc) {
         final String s = sc.next();
-        final Map<Character, Integer> map = new HashMap<>();
-        for (int j = 0; j < s.length(); j++) {
-            map.merge(s.charAt(j), 1, Integer::sum);
-        }
-        final int vowels = total(map, VOWELS);
-        final int consonants = total(map, CONSONANTS);
-        final int ans;
-        if (map.size() == 1) {
-            ans = 0;
-        } else if (vowels == s.length()) {
-            ans = Math.min(count(map, VOWELS, s), s.length());
-        } else if (consonants == s.length()) {
-            ans = Math.min(count(map, CONSONANTS, s), s.length());
-        } else if (vowels <= consonants) {
-            ans = count(map, VOWELS, s);
-        } else if (consonants < vowels){
-            ans = count(map, CONSONANTS, s);
-        } else {
-            throw new IllegalStateException("Unsolvable");
+        int ans = Integer.MAX_VALUE;
+        for (char c = 'A'; c <= 'Z'; c++) {
+            int cost = 0;
+            for (int j = 0; j < s.length(); j++) {
+                if (s.charAt(j) == c) {
+                    continue;
+                }
+                if (isVowel(c) && isVowel(s.charAt(j))) {
+                    cost += 2;
+                } else if (isConsonant(c) && isConsonant(s.charAt(j))) {
+                    cost += 2;
+                } else {
+                    cost += 1;
+                }
+            }
+            ans = Math.min(ans, cost);
         }
         new Output(i, this.out).print(ans).println();
     }
     
-    private int count(final Map<Character, Integer> map, final Set<Character> set, final String s) {
-        final Character t = findMax(map, set);
-        int ans = 0;
-        for (int j = 0; j < s.length(); j++) {
-            if (s.charAt(j) == t) {
-                continue;
-            } else if (set.contains(s.charAt(j))) {
-                ans += 2;
-            } else {
-                ans += 1;
-            }
-        }
-        return ans;
+    private boolean isVowel(final char c) {
+        return VOWELS.contains(c);
     }
-    
-    private Character findMax(final Map<Character, Integer> map, final Set<Character> set) {
-        final int max = set.stream()
-                .map(map::get)
-                .filter(Objects::nonNull)
-                .mapToInt(Integer::valueOf)
-                .max().getAsInt();
-        return set.stream()
-                .filter(v -> Integer.valueOf(max).equals(map.get(v)))
-                .findFirst().orElseThrow();
-    }
-    
-    private int total(final Map<Character, Integer> map, final Set<Character> set) {
-        return set.stream()
-                .map(map::get)
-                .filter(Objects::nonNull)
-                .mapToInt(Integer::valueOf)
-                .sum();
+
+    private boolean isConsonant(final char c) {
+        return !VOWELS.contains(c);
     }
     
     public void solve() {
